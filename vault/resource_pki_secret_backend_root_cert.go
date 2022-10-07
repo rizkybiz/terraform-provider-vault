@@ -89,6 +89,12 @@ func pkiSecretBackendRootCertResource() *schema.Resource {
 				Description: "CN of root to create.",
 				ForceNew:    true,
 			},
+			"issuer_name": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "Provides a name to the specified issuer.",
+				ForceNew:    true,
+			},
 			"alt_names": {
 				Type:        schema.TypeList,
 				Optional:    true,
@@ -309,6 +315,7 @@ func pkiSecretBackendRootCertCreate(d *schema.ResourceData, meta interface{}) er
 	}
 
 	data := map[string]interface{}{
+		"issuer_name":          d.Get("issuer_name").(string),
 		"common_name":          d.Get("common_name").(string),
 		"ttl":                  d.Get("ttl").(string),
 		"format":               d.Get("format").(string),
