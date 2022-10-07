@@ -24,6 +24,7 @@ func TestPkiSecretBackendRootCertificate_basic(t *testing.T) {
 	checks := []resource.TestCheckFunc{
 		resource.TestCheckResourceAttr(resourceName, "backend", path),
 		resource.TestCheckResourceAttr(resourceName, "type", "internal"),
+		resource.TestCheckResourceAttr(resourceName, "issuer_name", "test-issuer"),
 		resource.TestCheckResourceAttr(resourceName, "common_name", "test Root CA"),
 		resource.TestCheckResourceAttr(resourceName, "ttl", "86400"),
 		resource.TestCheckResourceAttr(resourceName, "format", "pem"),
@@ -149,6 +150,7 @@ resource "vault_mount" "test" {
 resource "vault_pki_secret_backend_root_cert" "test" {
   backend              = vault_mount.test.path
   type                 = "internal"
+	issuer_name          = "test-issuer"
   common_name          = "test Root CA"
   ttl                  = "86400"
   format               = "pem"
